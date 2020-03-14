@@ -8,17 +8,24 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.Predicate;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import com.oric.food.domain.model.Restaurante;
+import com.oric.food.domain.repository.RestauranteRepository;
 import com.oric.food.domain.repository.RestauranteRepositoryQueries;
+import com.oric.food.infrastructure.repository.spec.RestauranteSpecs;
 
 @Repository
 public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 	
 	@PersistenceContext
 	private EntityManager manager;
+	
+	@Autowired @Lazy
+	private RestauranteRepository restauranteRepository;
 	
 	@Override
 	public List<Restaurante> find(String nome, 
@@ -47,6 +54,14 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 		var query = manager.createQuery(criteria);
 		return query.getResultList();
 	}
+
+	@Override
+	public List<Restaurante> findComFreteGratis(String nome) {
+		
+		return restauranteRepository.findAll(RestauranteSpecs.comFreteGratis().and(RestauranteSpecs.comNomeSemelhante(nome)));
+	}
+	
+	
 	
 
 }
