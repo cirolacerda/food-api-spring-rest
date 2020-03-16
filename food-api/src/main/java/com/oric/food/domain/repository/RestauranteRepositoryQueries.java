@@ -12,5 +12,7 @@ public interface RestauranteRepositoryQueries {
 	List<Restaurante> findComFreteGratis( String nome);
 	
 	
+	
+	
 
 }
