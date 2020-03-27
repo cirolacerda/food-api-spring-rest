@@ -11,7 +11,7 @@ import com.oric.food.domain.model.Restaurante;
 @Repository
 public interface RestauranteRepository extends CustomJpaRepository<Restaurante, Long>, RestauranteRepositoryQueries, JpaSpecificationExecutor<Restaurante> {
 	
-	@Query("from Restaurante r join r.cozinha left join fetch r.formasPagamento")
+	@Query("from Restaurante r join r.cozinha")
 	List<Restaurante> findAll();
 	
 
