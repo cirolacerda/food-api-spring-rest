@@ -1,12 +1,9 @@
 package com.oric.food.api.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -35,35 +32,25 @@ public class RestauranteController {
 	}
 	
 	@GetMapping("/{restauranteId}")
-	public ResponseEntity<Restaurante> buscar( @PathVariable("restauranteId") Long id ) {
+	public Restaurante buscar( @PathVariable("restauranteId") Long id ) {
 		
-		Optional<Restaurante> restaurante =  restauranteRepository.findById(id);
+		return cadastroRestaurante.buscarOuFalhar(id);
 		
-		if(restaurante.isPresent()) {
-		
-		return ResponseEntity.ok(restaurante.get());
-		
-		}
-		
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 	
 	
 	@PutMapping("/{restauranteId}")
-	public ResponseEntity<Restaurante> atualizar( @PathVariable Long restauranteId, @RequestBody Restaurante restaurante){
+	public Restaurante atualizar( @PathVariable Long restauranteId, @RequestBody Restaurante restaurante){
 	
-		Optional<Restaurante> restauranteAtual = restauranteRepository.findById(restauranteId);
+		Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
 		
-		if(restauranteAtual.isPresent()) {
+					
+			BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro", "produtos");
 			
-			BeanUtils.copyProperties(restaurante, restauranteAtual.get(), "id", "formasPagamento", "endereco", "dataCadastro", "produtos");
 			
-			Restaurante restauranteSalvo = cadastroRestaurante.salvar(restauranteAtual.get());
 			
-			return ResponseEntity.ok(restauranteSalvo);
-		}
+			return cadastroRestaurante.salvar(restauranteAtual);
 		
-		return ResponseEntity.notFound().build();
 		
 	}
 
