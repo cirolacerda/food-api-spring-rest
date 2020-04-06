@@ -2,6 +2,8 @@ package com.oric.food.api.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +35,7 @@ public class EstadoController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Estado adicionar( @RequestBody Estado estado) {
+	public Estado adicionar( @RequestBody @Valid Estado estado) {
 		
 		return cadastroEstado.salvar(estado);
 		
