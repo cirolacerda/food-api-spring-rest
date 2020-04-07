@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.oric.food.Groups;
+import com.oric.food.core.validation.Groups;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

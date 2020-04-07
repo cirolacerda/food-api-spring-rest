@@ -1,4 +1,4 @@
-package com.oric.food;
+package com.oric.food.core.validation;
 
 public interface Groups {
 
