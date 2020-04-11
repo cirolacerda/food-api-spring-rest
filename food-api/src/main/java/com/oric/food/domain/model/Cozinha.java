@@ -13,7 +13,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.oric.food.core.validation.Groups;
 
 import lombok.Data;
@@ -31,13 +30,10 @@ public class Cozinha {
 	@GeneratedValue(strategy = GenerationType.IDENTITY )
 	private Long id;
 	
-	//@JsonIgnore
-	//@JsonProperty(value = "titulo")
 	@NotBlank
 	@Column(nullable = false)
 	private String nome;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy = "cozinha")
 	private List<Restaurante> restaurantes = new ArrayList<>();
 	

@@ -1,7 +1,6 @@
 package com.oric.food.api.model.mixin;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,7 +10,7 @@ import com.oric.food.domain.model.Endereco;
 import com.oric.food.domain.model.FormaPagamento;
 import com.oric.food.domain.model.Produto;
 
-public class RestauranteMixin {
+public abstract class RestauranteMixin {
 	
 
 	//@JsonIgnoreProperties({"hibernateLazyInitializer"})
@@ -29,10 +28,10 @@ public class RestauranteMixin {
 	
 		
 	@JsonIgnore
-	private List<FormaPagamento> formasPagamento = new ArrayList<>();
+	private List<FormaPagamento> formasPagamento;
 	
 	@JsonIgnore
-	private List<Produto> produtos = new ArrayList<>();
+	private List<Produto> produtos;
 	
 
 }
