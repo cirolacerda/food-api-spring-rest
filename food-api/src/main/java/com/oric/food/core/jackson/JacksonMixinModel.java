@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.oric.food.api.model.mixin.CidadeMixin;
+import com.oric.food.api.model.mixin.CozinhaMixin;
 import com.oric.food.api.model.mixin.RestauranteMixin;
 import com.oric.food.domain.model.Cidade;
 import com.oric.food.domain.model.Cozinha;
@@ -18,7 +19,7 @@ public class JacksonMixinModel extends SimpleModule {
 		
 		setMixInAnnotation(Restaurante.class, RestauranteMixin.class);
 		setMixInAnnotation(Cidade.class,CidadeMixin.class);
-		setMixInAnnotation(Cozinha.class, Cozinha.class); 
+		setMixInAnnotation(Cozinha.class, CozinhaMixin.class); 
 	}
 
 }
