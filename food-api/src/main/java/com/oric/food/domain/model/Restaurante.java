@@ -27,6 +27,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.oric.food.core.validation.Groups;
 
 import lombok.Data;
@@ -52,6 +53,7 @@ public class Restaurante {
 	private BigDecimal taxaFrete;
 	
 	//@JsonIgnoreProperties({"hibernateLazyInitializer"})
+	@JsonIgnoreProperties(value = "nome", allowGetters = true)
 	@Valid
 	@ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
 	@NotNull
