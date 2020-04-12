@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.oric.food.api.assembler.RestauranteInputDisassembler;
 import com.oric.food.api.assembler.RestauranteModelAssembler;
 import com.oric.food.api.model.RestauranteModel;
 import com.oric.food.api.model.input.RestauranteInput;
@@ -38,6 +39,9 @@ public class RestauranteController {
 	
 	@Autowired
 	private RestauranteModelAssembler restauranteModelAssembler;
+	
+	@Autowired
+	private RestauranteInputDisassembler restauranteInputDisassembler;
 
 	@GetMapping
 	public List<RestauranteModel> listar() {
@@ -50,7 +54,7 @@ public class RestauranteController {
 	public RestauranteModel adicionar(@RequestBody @Valid RestauranteInput restauranteInput) {
 		try {
 			
-			Restaurante restaurante =  toDomainObject(restauranteInput); 
+			Restaurante restaurante =  restauranteInputDisassembler.toDomainObject(restauranteInput); 
 			
 			return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restaurante));
 
@@ -73,7 +77,7 @@ public class RestauranteController {
 					
 		try {
 			
-			Restaurante restaurante = toDomainObject(restauranteInput);
+			Restaurante restaurante = restauranteInputDisassembler.toDomainObject(restauranteInput);
 
 			Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
 
@@ -88,19 +92,6 @@ public class RestauranteController {
 		}
 		
 	}
-	
-
-	private Restaurante toDomainObject(RestauranteInput restauranteInput) {
-		Restaurante restaurante = new Restaurante();
-		restaurante.setNome(restauranteInput.getNome());
-		restaurante.setTaxaFrete(restauranteInput.getTaxaFrete());
 		
-		Cozinha cozinha = new Cozinha();
-		cozinha.setId(restauranteInput.getCozinha().getId());
-		
-		restaurante.setCozinha(cozinha);
-		
-		return restaurante;
-	}
 
 }
