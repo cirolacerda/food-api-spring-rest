@@ -1,7 +1,7 @@
 package com.oric.food.domain.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +42,7 @@ public class Pedido {
 	
 	@CreationTimestamp
 	@Column (name="data_criacao", nullable = false, columnDefinition = "datetime")
-	private LocalDateTime dataCriacao;
+	private OffsetDateTime dataCriacao;
 	
 	@Embedded
 	private Endereco enderecoEntrega;
@@ -51,13 +51,13 @@ public class Pedido {
 	
 	@UpdateTimestamp
 	@Column(name = "data_confirmacao", columnDefinition = "datetime")
-	private LocalDateTime dataConfirmacao;
+	private OffsetDateTime dataConfirmacao;
 	
 	@Column(name = "data_cancelamento", columnDefinition = "datetime")
-	private LocalDateTime dataCancelamento;
+	private OffsetDateTime dataCancelamento;
 	
 	@Column(name = "data_entrega", columnDefinition = "datetime")
-	private LocalDateTime dataEntrega;
+	private OffsetDateTime dataEntrega;
 	
 	@ManyToOne
 	@JoinColumn (nullable = false)
