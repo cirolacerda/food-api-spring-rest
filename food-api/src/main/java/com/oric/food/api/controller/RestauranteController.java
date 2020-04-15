@@ -20,6 +20,7 @@ import com.oric.food.api.assembler.RestauranteInputDisassembler;
 import com.oric.food.api.assembler.RestauranteModelAssembler;
 import com.oric.food.api.model.RestauranteModel;
 import com.oric.food.api.model.input.RestauranteInput;
+import com.oric.food.domain.exception.CidadeNaoEncontradaException;
 import com.oric.food.domain.exception.CozinhaNaoEncontradaException;
 import com.oric.food.domain.exception.NegocioException;
 import com.oric.food.domain.model.Restaurante;
@@ -87,7 +88,7 @@ public class RestauranteController {
 	
 			return restauranteModelAssembler.toModel(cadastroRestaurante.salvar(restauranteAtual));
 		
-		} catch (CozinhaNaoEncontradaException e) {
+		} catch (CozinhaNaoEncontradaException | CidadeNaoEncontradaException e) {
 			
 			throw new NegocioException(e.getMessage());
 		}
