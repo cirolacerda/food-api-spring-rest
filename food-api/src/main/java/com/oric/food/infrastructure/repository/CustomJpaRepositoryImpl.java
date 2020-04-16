@@ -6,9 +6,11 @@ import javax.persistence.EntityManager;
 
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+import org.springframework.data.repository.NoRepositoryBean;
 
 import com.oric.food.domain.repository.CustomJpaRepository;
 
+@NoRepositoryBean
 public class CustomJpaRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> implements CustomJpaRepository<T, ID> {
 
 	private EntityManager manager;
@@ -31,6 +33,10 @@ public class CustomJpaRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID> i
 		return Optional.ofNullable(entity);
 		
 		
+	}
+
+	public void detach(T entity) {
+		manager.detach(entity);
 	}
 	
 	

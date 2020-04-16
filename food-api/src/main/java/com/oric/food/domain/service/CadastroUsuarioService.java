@@ -1,5 +1,7 @@
 package com.oric.food.domain.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -17,11 +19,21 @@ public class CadastroUsuarioService {
 	
 	private static final String MSG_USUARIO_EM_USO = "Usuário de código %d não pode ser removido, pois está em uso";
 	
+	private static final String MSG_EMAIL_JA_EXISTE = "Já existe um usuário cadastrado com o e-mail %s";
+	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
 	@Transactional
 	public Usuario salvar(Usuario usuario) {
+		
+		usuarioRepository.detach(usuario);
+		
+		Optional<Usuario> usuarioExistente = usuarioRepository.findByEmail(usuario.getEmail());
+		
+		if(usuarioExistente.isPresent() && !usuarioExistente.get().equals(usuario)) {
+			throw new NegocioException(String.format(MSG_EMAIL_JA_EXISTE, usuario.getEmail()));
+		}
 		
 		return usuarioRepository.save(usuario);
 		
