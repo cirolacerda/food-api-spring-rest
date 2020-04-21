@@ -23,6 +23,7 @@ import com.oric.food.api.model.input.RestauranteInput;
 import com.oric.food.domain.exception.CidadeNaoEncontradaException;
 import com.oric.food.domain.exception.CozinhaNaoEncontradaException;
 import com.oric.food.domain.exception.NegocioException;
+import com.oric.food.domain.exception.RestauranteNaoEncontradoException;
 import com.oric.food.domain.model.Restaurante;
 import com.oric.food.domain.repository.RestauranteRepository;
 import com.oric.food.domain.service.CadastroRestauranteService;
@@ -107,6 +108,32 @@ public class RestauranteController {
 	public void inativar(@PathVariable Long restauranteId) {
 		
 		cadastroRestaurante.inativar(restauranteId);
+	}
+	
+	@PutMapping("/ativacoes")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void ativarMultiplos(@RequestBody List<Long> restauranteIds) {
+		try {
+				cadastroRestaurante.ativar(restauranteIds);
+			
+		} catch (RestauranteNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
+		
+		
+	}
+	
+	@DeleteMapping("/ativacoes")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void inativarMultiplos(@RequestBody List<Long> restauranteIds) {
+		try {
+				cadastroRestaurante.inativar(restauranteIds);
+			
+		} catch (RestauranteNaoEncontradoException e) {
+			throw new NegocioException(e.getMessage(), e);
+		}
+		
+		
 	}
 	
 	@PutMapping("/{restauranteId}/abertura")
