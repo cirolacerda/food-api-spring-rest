@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.oric.food.domain.exception.EntidadeEmUsoException;
 import com.oric.food.domain.exception.NegocioException;
 import com.oric.food.domain.exception.UsuarioNaoEncontradoException;
+import com.oric.food.domain.model.Grupo;
 import com.oric.food.domain.model.Usuario;
 import com.oric.food.domain.repository.UsuarioRepository;
 
@@ -23,6 +24,9 @@ public class CadastroUsuarioService {
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private CadastroGrupoService cadastroGrupoService;
 	
 	@Transactional
 	public Usuario salvar(Usuario usuario) {
@@ -70,5 +74,23 @@ public class CadastroUsuarioService {
 		
 		return usuarioRepository.findById(usuarioId)
 				.orElseThrow(()-> new UsuarioNaoEncontradoException(usuarioId));
+	}
+	
+	@Transactional
+	public void associarGrupo(Long usuarioId, Long grupoId) {
+		Usuario usuario =  buscarOuFalhar(usuarioId);
+		
+		Grupo grupo = cadastroGrupoService.buscarOuFalhar(grupoId);
+		
+		usuario.adicionarGrupo(grupo);
+		
+	}
+	
+	public void desassociarGrupo(Long usuarioId, Long grupoId) {
+		Usuario usuario = buscarOuFalhar(usuarioId);
+		
+		Grupo grupo = cadastroGrupoService.buscarOuFalhar(grupoId);
+		
+		usuario.removerGrupo(grupo);
 	}
 }
