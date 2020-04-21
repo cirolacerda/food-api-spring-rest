@@ -86,6 +86,7 @@ public class CadastroUsuarioService {
 		
 	}
 	
+	@Transactional
 	public void desassociarGrupo(Long usuarioId, Long grupoId) {
 		Usuario usuario = buscarOuFalhar(usuarioId);
 		
