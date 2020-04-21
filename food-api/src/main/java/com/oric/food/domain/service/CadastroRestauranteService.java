@@ -9,6 +9,7 @@ import com.oric.food.domain.model.Cidade;
 import com.oric.food.domain.model.Cozinha;
 import com.oric.food.domain.model.FormaPagamento;
 import com.oric.food.domain.model.Restaurante;
+import com.oric.food.domain.model.Usuario;
 import com.oric.food.domain.repository.RestauranteRepository;
 
 @Service
@@ -25,6 +26,9 @@ public class CadastroRestauranteService {
 	
 	@Autowired
 	private CadastroFormaPagamentoService cadastroFormaPagamento;
+	
+	@Autowired
+	private CadastroUsuarioService cadastroUsuario;
 	
 	@Transactional
 	public Restaurante salvar(Restaurante restaurante) {
@@ -92,6 +96,22 @@ public class CadastroRestauranteService {
 
 		restaurante.adicionarFormaPagamento(formaPagamento);
 		
+	}
+	
+	@Transactional
+	public void associarResponsavel(Long restauranteId, Long usuarioId) {
+		Restaurante restaurante = buscarOuFalhar(restauranteId);
+		Usuario usuario = cadastroUsuario.buscarOuFalhar(usuarioId);
+		
+		restaurante.adicionarResponsavel(usuario);
+	}
+	
+	@Transactional
+	public void desassociarResponsavel(Long restauranteId, Long usuarioId) {
+		Restaurante restaurante = buscarOuFalhar(restauranteId);
+		Usuario usuario = cadastroUsuario.buscarOuFalhar(usuarioId);
+		
+		restaurante.removerResponsavel(usuario);		
 	}
 	
 	public Restaurante buscarOuFalhar(Long restauranteId) {
