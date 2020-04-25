@@ -1,6 +1,7 @@
 package com.oric.food.api.model.input;
 
-import java.math.BigDecimal;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,11 +10,14 @@ import lombok.Setter;
 @Setter
 public class ItemPedidoInput {
 	
-	private Long pedidoId;
+	@NotNull
 	private Long produtoId;
-    private Integer quantidade;
-    private BigDecimal precoUnitario;
-    private BigDecimal precoTotal;
+    
+	@NotNull
+	@PositiveOrZero
+	private Integer quantidade;
+ 
+
     private String observacao;  
 
 }

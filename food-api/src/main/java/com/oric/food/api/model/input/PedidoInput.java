@@ -1,7 +1,10 @@
 package com.oric.food.api.model.input;
 
-import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import java.util.List;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,18 +13,22 @@ import lombok.Setter;
 @Setter
 public class PedidoInput {
 	
-	private BigDecimal subtotal;
-	private BigDecimal taxaFrete;
-	private BigDecimal valorTotal;
-	private String status;
-	private OffsetDateTime dataCriacao;
-	private OffsetDateTime dataConfirmacao;
-	private OffsetDateTime dataEntrega;
-	private OffsetDateTime dataCancelamento;
+	@Valid
+	@NotNull
 	private RestauranteIdInput restaurante;
-	private UsuarioIdInput cliente;
+	
+	@Valid
+	@NotNull
 	private FormaPagamentoIdInput formaPagamento;
+	
+	@Valid
+	@NotNull
 	private EnderecoInput enderecoEntrega;
+	
+	@Valid
+	@NotNull
+	@Size(min = 1)
+	private List<ItemPedidoInput> itens;
 	
 
 }

@@ -97,6 +97,9 @@ delete from item_pedido;
 
 set foreign_key_checks = 1;
 
+alter table pedido auto_increment = 1;
+alter table item_pedido auto_increment = 1;
+
 insert into pedido (id, restaurante_id, usuario_cliente_id, forma_pagamento_id, endereco_cidade_id, endereco_cep, 
     endereco_logradouro, endereco_numero, endereco_complemento, endereco_bairro,
     status, data_criacao, subtotal, taxa_frete, valor_total)
